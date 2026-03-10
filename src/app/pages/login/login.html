@@ -1,0 +1,39 @@
+<div>
+    <h2>Login</h2>
+    @if (errorMessage) {
+        <p style="color: red">{{ errorMessage }}</p>
+    }
+
+    <form [formGroup] = "loginForm" (ngSubmit)="onSubmit()">
+
+        <div>
+            <label>Email</label>
+            <input type="email" formControlName="email" placeholder="email@example.com" />
+            @if (loginForm.get('email')?.touched && loginForm.get('email')?.hasError('required')){
+                <p>Email-ul este obligatoriu</p>
+            }
+            @if (loginForm.get('email')?.touched && loginForm.get('email')?.hasError('email')){
+                <p>Email-ul nu este valid</p>
+            }
+        </div>
+
+        <div>
+            <label>Parola</label>
+            <input type="password" formControlName="password" placeholder="parola"/>
+             @if (loginForm.get('password')?.touched && loginForm.get('password')?.hasError('required')){
+                <p>Parola este obligatoriu</p>
+            }
+            @if (loginForm.get('password')?.touched && loginForm.get('password')?.hasError('minlength')){
+                <p>Parola trebuie sa aiba minim 6 caractere</p>
+            }
+        </div>
+
+        <div>
+            Nu ai cont? <a routerLink="/signup">Inregistreaza-te</a>
+        </div>
+
+        <button type="submit" [disabled]="loginForm.invalid">Login</button>
+
+    </form>
+
+</div>
