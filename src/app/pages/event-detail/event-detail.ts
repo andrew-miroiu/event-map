@@ -27,27 +27,30 @@ export class EventDetail implements OnInit{
   }
 
   ngAfterViewInit(){
-     if (!this.event) return;
+    if (!this.event) return;
 
-    const iconDefault = L.icon({
-          iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
-          iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
-          shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
-          iconSize: [25, 41],
-          iconAnchor: [12, 41],
-          popupAnchor: [1, -34],
-        });
-    
-        L.Marker.prototype.options.icon = iconDefault;
-
-    this.map = L.map(this.mapContainer.nativeElement).setView([this.event.lat, this.event.lng], 16);
+    this.map = L.map(this.mapContainer.nativeElement)
+      .setView([this.event.lat, this.event.lng], 16);
 
     L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-          attribution: '© CartoDB'
-        }).addTo(this.map);
-    
-    L.marker([this.event.lat, this.event.lng]).addTo(this.map)
-        .bindPopup(this.event.title);
+      attribution: '© CartoDB'
+    }).addTo(this.map);
 
+    const customIcon = L.divIcon({
+      className: 'custom-marker',
+      html: `
+        <div class="marker-wrapper">
+          <div class="marker-dot"></div>
+          <div class="marker-line"></div>
+          <div class="marker-label">${this.event.title}</div>
+        </div>
+      `,
+      iconSize: [120, 40],
+      iconAnchor: [60, 40]
+    });
+
+    this.marker = L.marker([this.event.lat, this.event.lng], {
+      icon: customIcon
+    }).addTo(this.map);
   }
 }

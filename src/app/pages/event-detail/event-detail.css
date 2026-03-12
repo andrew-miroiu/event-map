@@ -138,3 +138,40 @@
     padding: 1.5rem;
   }
 }
+
+:host ::ng-deep .custom-marker {
+  background: transparent;
+  border: none;
+}
+
+:host ::ng-deep .marker-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+:host ::ng-deep .marker-dot {
+  width: 10px;
+  height: 10px;
+  background: #5ef2b6;
+  border-radius: 50%;
+  box-shadow: 0 0 10px #5ef2b6;
+}
+
+:host ::ng-deep .marker-line {
+  width: 2px;
+  height: 12px;
+  background: #5ef2b6;
+}
+
+:host ::ng-deep .marker-label {
+  margin-top: 4px;
+  padding: 3px 8px;
+  border: 1px solid #5ef2b6;
+  color: #5ef2b6;
+  font-size: 10px;
+  font-family: monospace;
+  border-radius: 4px;
+  background: rgba(0,0,0,0.7);
+  white-space: nowrap;
+}

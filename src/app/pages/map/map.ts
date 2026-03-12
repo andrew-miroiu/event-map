@@ -4,6 +4,7 @@ import { EventsService } from '../../services/events.service'
 import { Event } from '../../interfaces/event'
 import { Sidebar } from '../../components/sidebar/sidebar'
 import { Navbar } from '../../components/navbar/navbar'
+import { TruncatePipe } from '../../pipes/truncate.pipe';
 import * as L from 'leaflet';
 
 @Component({
@@ -18,6 +19,8 @@ export class Map implements AfterViewInit, OnInit {
   private router = inject(Router);
   private eventService = inject(EventsService);
   private events: Event[] = [];
+
+  private truncatePipe = new TruncatePipe();
 
   searchTerm: string = '';
 
@@ -42,6 +45,7 @@ export class Map implements AfterViewInit, OnInit {
       iconAnchor: [12, 41],
       popupAnchor: [1, -34],
     });
+
 
     L.Marker.prototype.options.icon = iconDefault;
 
@@ -71,15 +75,30 @@ export class Map implements AfterViewInit, OnInit {
     this.markers = [];
 
     const filtered = this.eventService.searchEvents(this.searchTerm);
+
     filtered.forEach((event) => {
-      const marker = L.marker([event.lat, event.lng], {riseOnHover: true})
-        .addTo(this.map);
-      marker.bindPopup(event.title);
-      marker.on('mouseover', () => marker.openPopup());
-      marker.on('mouseout', () => marker.closePopup());
-      marker.on('click', () => this.goToEvent(event.id))
+
+      const customIcon = L.divIcon({
+        className: 'custom-marker',
+        html: `
+          <div class="marker-wrapper">
+            <div class="marker-dot"></div>
+            <div class="marker-line"></div>
+            <div class="marker-label">${this.truncatePipe.transform(event.title, 12)}</div>
+          </div>
+        `,
+        iconSize: [120, 40],
+        iconAnchor: [60, 40]
+      });
+
+      const marker = L.marker([event.lat, event.lng], {
+        icon: customIcon,
+        riseOnHover: true
+      }).addTo(this.map);
+
+      marker.on('click', () => this.goToEvent(event.id));
       this.markers.push(marker);
-    })
+    });
   }
 
   goToEvent(id: string){
