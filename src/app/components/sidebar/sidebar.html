@@ -1,1 +1,17 @@
-<p>sidebar works!</p>
+<div>
+    <div class="search">
+        <input 
+            type="text" 
+            placeholder="Caută evenimente..."
+            (input)="onSearch($event)" 
+        />
+    </div>
+
+    <div class="eventList">
+        @for(event of events; track event.id){
+            <div class="eventItem">
+                {{ event.title }}
+            </div>
+        }
+    </div>
+</div>

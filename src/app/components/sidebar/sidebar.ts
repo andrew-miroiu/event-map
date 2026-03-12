@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnInit} from '@angular/core';
+import { EventsService } from '../../services/events.service'
+import { Event } from '../../interfaces/event'
 
 @Component({
   selector: 'app-sidebar',
@@ -6,4 +8,17 @@ import { Component } from '@angular/core';
   templateUrl: './sidebar.html',
   styleUrl: './sidebar.css',
 })
-export class Sidebar {}
+export class Sidebar implements OnInit{
+  private eventService = inject(EventsService);
+  events: Event[] = [];
+
+  ngOnInit(){
+    this.events = this.eventService.getEvents();
+  }
+
+  onSearch(domEvent: globalThis.Event) {
+    const term = (domEvent.target as HTMLInputElement).value;
+    this.events = this.eventService.searchEvents(term);
+  }
+
+}

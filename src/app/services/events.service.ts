@@ -78,4 +78,17 @@ export class EventsService {
     return this.events;
   }
 
+  searchEvents(term: string): Event[] {
+    if (!term.trim()) {
+      return this.events;
+    }
+    
+    const lower = term.toLowerCase();
+    return this.events.filter(event =>
+      event.title.toLowerCase().includes(lower) ||
+      event.category.toLowerCase().includes(lower) ||
+      event.tags.some(tag => tag.toLowerCase().includes(lower))
+    );
+  }
+
 }
