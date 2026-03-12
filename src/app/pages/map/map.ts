@@ -27,7 +27,7 @@ export class Map implements AfterViewInit, OnInit {
   private map!: L.Map;
   private markers: L.Marker[] = [];
 
-  isSidebarOpen: boolean = true;
+  isSidebarOpen: boolean = false;
 
   ngOnInit(){
     this.events = this.eventService.getEvents();
@@ -56,6 +56,7 @@ export class Map implements AfterViewInit, OnInit {
     }).addTo(this.map);
 
     this.updateMarkers();
+    this.getUserLocation();
   }
 
   toggleSidebar() {
@@ -103,5 +104,30 @@ export class Map implements AfterViewInit, OnInit {
 
   goToEvent(id: string){
     this.router.navigate(['event', id])
+  }
+
+  getUserLocation() {
+    if (!navigator.geolocation) {
+      console.log('Geolocation not supported');
+      return;
+    }
+
+    navigator.geolocation.getCurrentPosition((position) => {
+
+      const lat = position.coords.latitude;
+      const lng = position.coords.longitude;
+
+      this.map.setView([lat, lng], 14);
+
+      const userMarker = L.circleMarker([lat, lng], {
+        radius: 8,
+        color: '#6ee7b7',
+        fillColor: '#2d6e56',
+        fillOpacity: 1
+      }).addTo(this.map);
+
+      userMarker.bindPopup('You are here');
+
+    });
   }
 }
