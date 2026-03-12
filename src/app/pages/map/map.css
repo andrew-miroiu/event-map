@@ -1,0 +1,73 @@
+.map-page {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.map-layout {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+}
+
+.map-container {
+  flex: 1;
+  height: 100%;
+}
+
+.burger-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 36px;
+  height: 36px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  font-size: 1rem;
+  cursor: pointer;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.2s;
+}
+
+.burger-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.sidebar-overlay {
+  display: none;
+}
+
+.sidebar-wrapper {
+  width: 300px;
+  height: 100%;
+  flex-shrink: 0;
+}
+
+/* Pe mobil — sidebar overlay peste hartă */
+@media (max-width: 768px) {
+  .sidebar-overlay {
+    display: block;
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 998;
+  }
+
+  .sidebar-wrapper {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    z-index: 999;
+    width: 85%;
+    max-width: 300px;
+  }
+}

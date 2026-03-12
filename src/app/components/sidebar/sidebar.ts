@@ -1,4 +1,4 @@
-import { Component, inject, OnInit} from '@angular/core';
+import { Component, inject, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges} from '@angular/core';
 import { EventsService } from '../../services/events.service'
 import { Event } from '../../interfaces/event'
 
@@ -8,7 +8,10 @@ import { Event } from '../../interfaces/event'
   templateUrl: './sidebar.html',
   styleUrl: './sidebar.css',
 })
-export class Sidebar implements OnInit{
+export class Sidebar implements OnInit, OnChanges{
+  @Input() searchTerm: string = '';
+  @Output() eventSelected = new EventEmitter<string>();
+  
   private eventService = inject(EventsService);
   events: Event[] = [];
 
@@ -16,9 +19,10 @@ export class Sidebar implements OnInit{
     this.events = this.eventService.getEvents();
   }
 
-  onSearch(domEvent: globalThis.Event) {
-    const term = (domEvent.target as HTMLInputElement).value;
-    this.events = this.eventService.searchEvents(term);
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['searchTerm']) {
+      this.events = this.eventService.searchEvents(this.searchTerm);
+    }
   }
 
 }

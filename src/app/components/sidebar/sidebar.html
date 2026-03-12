@@ -1,17 +1,19 @@
-<div>
-    <div class="search">
-        <input 
-            type="text" 
-            placeholder="Caută evenimente..."
-            (input)="onSearch($event)" 
-        />
-    </div>
+<div class="sidebar">
+  <div class="sidebar-header">
+    <div class="sidebar-title">{{ events.length }} evenimente</div>
+  </div>
 
-    <div class="eventList">
-        @for(event of events; track event.id){
-            <div class="eventItem">
-                {{ event.title }}
-            </div>
-        }
-    </div>
+  <div class="events-list">
+    @for (event of events; track event.id) {
+      <div class="event-card" (click)="eventSelected.emit(event.id)">
+        <div class="event-category">{{ event.category }}</div>
+        <div class="event-title">{{ event.title }}</div>
+        <div class="event-meta">
+          <span>{{ event.date }}</span>
+          <span>{{ event.time }}</span>
+          <span>{{ event.price === 0 ? 'Gratuit' : event.price + ' RON' }}</span>
+        </div>
+      </div>
+    }
+  </div>
 </div>

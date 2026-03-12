@@ -1,47 +1,52 @@
-<div>
-    <h2>Signup</h2>
-    @if (errorMessage) {
-        <p style="color: red">{{ errorMessage }}</p>
-    }
+<div class="signup-page">
 
-    <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
-        <div>
-            <label>Email</label>
-            <input type="email" formControlName="email" placeholder="email@example.com" />
-            @if (signupForm.get('email')?.touched && signupForm.get('email')?.hasError('required')){
-                <p>Email-ul este obligatoriu</p>
-            }
-            @if (signupForm.get('email')?.touched && signupForm.get('email')?.hasError('email')){
-                <p>Email-ul nu este valid</p>
-            }
-        </div>
+    <div class="signup-logo">⬡ EventMap</div>
 
-        <div>
-            <label>Parola</label>
-            <input type="password" formControlName="password" placeholder="parola"/>
-             @if (signupForm.get('password')?.touched && signupForm.get('password')?.hasError('required')){
-                <p>Parola este obligatoriu</p>
-            }
-            @if (signupForm.get('password')?.touched && signupForm.get('password')?.hasError('minlength')){
-                <p>Parola trebuie sa aiba minim 6 caractere</p>
-            }
-        </div>
+    <div class="signup-box">
+        <h2>Signup</h2>
+        @if (errorMessage) {
+            <p class="error-message">{{ errorMessage }}</p>
+        }
 
-        <div>
-            <label>Confirma Parola</label>
-            <input type="password" formControlName="confirmPassword" placeholder="confirma parola"/>
-            @if (signupForm.get('confirmPassword')?.touched && signupForm.get('confirmPassword')?.hasError('required')) {
-                <p>Confirmarea parolei este obligatorie</p>
-            }
-            @if (signupForm.get('confirmPassword')?.touched && signupForm.hasError('mismatch')) {
-                <p>Parolele nu corespund</p>
-            }
-        </div>
+        <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+            <div class="field">
+                <label>Email</label>
+                <input type="email" formControlName="email" placeholder="email@example.com" />
+                @if (signupForm.get('email')?.touched && signupForm.get('email')?.hasError('required')){
+                    <p class="field-error">Email-ul este obligatoriu</p>
+                }
+                @if (signupForm.get('email')?.touched && signupForm.get('email')?.hasError('email')){
+                    <p class="field-error">Email-ul nu este valid</p>
+                }
+            </div>
 
-        <div>
-            Ai cont deja? <a routerLink="/login">Login</a>
-        </div>
-        
-        <button type="submit" [disabled]="signupForm.invalid">Inregistreaza-te</button>
-    </form>
+            <div class="field">
+                <label>Parola</label>
+                <input type="password" formControlName="password" placeholder="parola"/>
+                @if (signupForm.get('password')?.touched && signupForm.get('password')?.hasError('required')){
+                    <p class="field-error">Parola este obligatoriu</p>
+                }
+                @if (signupForm.get('password')?.touched && signupForm.get('password')?.hasError('minlength')){
+                    <p class="field-error">Parola trebuie sa aiba minim 6 caractere</p>
+                }
+            </div>
+
+            <div class="field">
+                <label>Confirma Parola</label>
+                <input type="password" formControlName="confirmPassword" placeholder="confirma parola"/>
+                @if (signupForm.get('confirmPassword')?.touched && signupForm.get('confirmPassword')?.hasError('required')) {
+                    <p class="field-error">Confirmarea parolei este obligatorie</p>
+                }
+                @if (signupForm.get('confirmPassword')?.touched && signupForm.hasError('mismatch')) {
+                    <p class="field-error">Parolele nu corespund</p>
+                }
+            </div>
+
+            <div class="signup-footer">
+                Ai cont deja? <a routerLink="/login">Login</a>
+            </div>
+            
+            <button type="submit" class="btn-primary" [disabled]="signupForm.invalid">Inregistreaza-te</button>
+        </form>
+    </div>
 </div>

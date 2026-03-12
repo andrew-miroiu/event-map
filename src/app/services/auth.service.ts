@@ -1,9 +1,11 @@
-import { Injectable, signal } from '@angular/core';
-
+import { Injectable, signal, inject} from '@angular/core';
+import { Router } from '@angular/router';
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+
+  private router = inject(Router);
 
   private mockUsers = [
     { email: 'test@test.com', password: '123456' },
@@ -32,6 +34,7 @@ export class AuthService {
     this.currentUser.set(null);
     localStorage.removeItem('isLoggedIn');
     localStorage.removeItem('currentUser');
+    this.router.navigate(['/login']);
   }
 
   register(email: string, password: string): boolean {

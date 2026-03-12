@@ -1,1 +1,17 @@
-<p>navbar works!</p>
+<nav class="navbar">
+  <div class="navbar-logo">⬡</div>
+
+  <div class="navbar-search">
+    <span>⌕</span>
+    <input 
+      type="text" 
+      placeholder="Caută evenimente..."
+      (input)="search.emit($any($event.target).value)"
+    />
+  </div>
+
+  <div class="navbar-user">
+    <span class="navbar-email">{{ username() }}</span>
+    <button class="btn-logout" (click)="logout()">Logout</button>
+  </div>
+</nav>

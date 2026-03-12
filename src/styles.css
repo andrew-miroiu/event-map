@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap');
+
 * {
   margin: 0;
   padding: 0;
@@ -7,4 +9,24 @@
 html, body {
   height: 100%;
   overflow: hidden;
+  background: #0a0a0a;
+  color: #e5e5e5;
+  font-family: 'DM Sans', sans-serif;
+}
+
+:root {
+  --bg: #0a0a0a;
+  --bg-card: #141414;
+  --bg-panel: #111111;
+  --border: #222222;
+  --accent: #6ee7b7;
+  --accent-dim: #2d6e56;
+  --accent-glow: rgba(110, 231, 183, 0.15);
+  --danger: #f87171;
+  --text: #e5e5e5;
+  --text-muted: #555555;
+  --text-dim: #888888;
+  --font-mono: 'Space Mono', monospace;
+  --font-sans: 'DM Sans', sans-serif;
+  --radius: 10px;
 }

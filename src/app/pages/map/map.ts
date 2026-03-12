@@ -1,22 +1,28 @@
 import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, inject } from '@angular/core';
+import { Router } from '@angular/router';
 import { EventsService } from '../../services/events.service'
 import { Event } from '../../interfaces/event'
 import { Sidebar } from '../../components/sidebar/sidebar'
+import { Navbar } from '../../components/navbar/navbar'
 import * as L from 'leaflet';
 
 @Component({
   selector: 'app-map',
   standalone: true,
-  imports: [Sidebar],
+  imports: [Sidebar, Navbar],
   templateUrl: './map.html',
   styleUrl: './map.css',
 })
 export class Map implements AfterViewInit, OnInit {
 
+  private router = inject(Router);
   private eventService = inject(EventsService);
   private events: Event[] = [];
 
+  searchTerm: string = '';
+
   private map!: L.Map;
+  private markers: L.Marker[] = [];
 
   isSidebarOpen: boolean = true;
 
@@ -45,12 +51,7 @@ export class Map implements AfterViewInit, OnInit {
       attribution: '© CartoDB'
     }).addTo(this.map);
 
-    this.events.forEach((event) => {
-      const marker = L.marker([event.lat, event.lng], { riseOnHover: true }).addTo(this.map);
-      marker.bindPopup(event.title);
-      marker.on('mouseover', () => marker.openPopup());
-      marker.on('mouseout', () => marker.closePopup());
-    })
+    this.updateMarkers();
   }
 
   toggleSidebar() {
@@ -58,5 +59,30 @@ export class Map implements AfterViewInit, OnInit {
     setTimeout(() => {
       this.map.invalidateSize();
     }, 0);
+  }
+
+  onSearch(term: string) {
+    this.searchTerm = term;
+    this.updateMarkers();
+  }
+
+  updateMarkers(){
+    this.markers.forEach(marker => marker.remove());
+    this.markers = [];
+
+    const filtered = this.eventService.searchEvents(this.searchTerm);
+    filtered.forEach((event) => {
+      const marker = L.marker([event.lat, event.lng], {riseOnHover: true})
+        .addTo(this.map);
+      marker.bindPopup(event.title);
+      marker.on('mouseover', () => marker.openPopup());
+      marker.on('mouseout', () => marker.closePopup());
+      marker.on('click', () => this.goToEvent(event.id))
+      this.markers.push(marker);
+    })
+  }
+
+  goToEvent(id: string){
+    this.router.navigate(['event', id])
   }
 }
