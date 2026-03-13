@@ -1,4 +1,4 @@
-import { Component, OnInit,signal, AfterViewInit, ViewChild, ElementRef, inject } from '@angular/core';
+import { Component, OnInit,signal, AfterViewInit, OnDestroy, ViewChild, ElementRef, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { EventsService } from '../../services/events.service'
 import { Event } from '../../interfaces/event'
@@ -14,7 +14,7 @@ import * as L from 'leaflet';
   templateUrl: './map.html',
   styleUrl: './map.css',
 })
-export class Map implements AfterViewInit, OnInit {
+export class Map implements AfterViewInit, OnInit, OnDestroy {
 
   private router = inject(Router);
   private eventService = inject(EventsService);
@@ -33,6 +33,12 @@ export class Map implements AfterViewInit, OnInit {
 
   ngOnInit(){
     this.events = this.eventService.getEvents();
+  }
+
+  ngOnDestroy(){
+    if (this.map) {
+      this.map.remove();
+    }
   }
 
   @ViewChild('mapContainer') mapContainer!: ElementRef;
