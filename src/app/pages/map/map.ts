@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, inject } from '@angular/core';
+import { Component, OnInit,signal, AfterViewInit, ViewChild, ElementRef, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { EventsService } from '../../services/events.service'
 import { Event } from '../../interfaces/event'
@@ -23,6 +23,8 @@ export class Map implements AfterViewInit, OnInit {
   private truncatePipe = new TruncatePipe();
 
   searchTerm: string = '';
+  selectedDate = signal<string>('');
+  selectedDateTo = signal<string>('');
 
   private map!: L.Map;
   private markers: L.Marker[] = [];
@@ -75,7 +77,7 @@ export class Map implements AfterViewInit, OnInit {
     this.markers.forEach(marker => marker.remove());
     this.markers = [];
 
-    const filtered = this.eventService.searchEvents(this.searchTerm);
+    const filtered = this.eventService.searchEvents(this.searchTerm, this.selectedDate(), this.selectedDateTo());
 
     filtered.forEach((event) => {
 
@@ -129,5 +131,11 @@ export class Map implements AfterViewInit, OnInit {
       userMarker.bindPopup('You are here');
 
     });
+  }
+
+  changeDate(dateFilter: {from: string, to: string}) {
+    this.selectedDate.set(dateFilter.from);
+    this.selectedDateTo.set(dateFilter.to);
+    this.updateMarkers();
   }
 }

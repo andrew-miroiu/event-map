@@ -16,7 +16,10 @@
     <div class="sidebar-wrapper" [hidden]="!isSidebarOpen">
       <app-sidebar 
         [searchTerm]="searchTerm" 
-        (eventSelected)="goToEvent($event)">
+        [selectedDate]="selectedDate()"
+        [selectedDateTo]="selectedDateTo()"
+        (eventSelected)="goToEvent($event)"
+        (dateSelected)="changeDate($event)">
       </app-sidebar>
     </div>
   </div>

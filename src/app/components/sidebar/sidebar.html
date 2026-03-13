@@ -1,6 +1,19 @@
 <div class="sidebar">
   <div class="sidebar-header">
     <div class="sidebar-title">{{ events.length }} evenimente</div>
+        <input 
+            type="date" 
+            class="date-filter"
+            [value]="selectedDate"
+            (change)="onDateChange($event)" 
+        />
+  </div>
+
+  <div class="quick-filters">
+    <button class="quick-btn" (click)="setQuickDate('today')">Azi</button>
+    <button class="quick-btn" (click)="setQuickDate('tomorrow')">Mâine</button>
+    <button class="quick-btn" (click)="setQuickDate('week')">Săptămâna</button>
+    <button class="quick-btn" (click)="setQuickDate('')">Toate</button>
   </div>
 
   <div class="events-list">
