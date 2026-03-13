@@ -1,59 +1,114 @@
-# EventMap
+# ⬡ EventMap
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.0.
+A modern event discovery app built with **Angular 21** — find what's happening around you tonight.
 
-## Development server
+![Login](public/screenshot-login.png)
 
-To start a local development server, run:
+---
+
+## Overview
+
+EventMap lets users discover local events on an interactive map. Browse events by location, filter by date, and get details instantly — built for people exploring a new city or looking for something to do tonight.
+
+![Map View](public/screenshot-map.png)
+
+---
+
+## Features
+
+- 🗺️ **Interactive map** with custom markers powered by Leaflet
+- 🔍 **Real-time search** — filters both map pins and sidebar list simultaneously
+- 📅 **Date filters** — quick buttons (Today, Tomorrow, This Week) + date picker
+- 📍 **Geolocation** — centers the map on the user's current location
+- 🔐 **Auth flow** — login, signup with route guards protecting the map
+- 📱 **Responsive** — sidebar becomes an overlay drawer on mobile
+- 🎨 **Dark mode** — CartoDB dark tiles + custom dark UI
+
+![Event Detail](public/screenshot-detail.png)
+
+---
+
+## Tech Stack
+
+| | |
+|---|---|
+| Framework | Angular 21 |
+| Map | Leaflet + CartoDB dark tiles |
+| Styling | CSS with custom properties |
+| Auth | Mock auth with localStorage persistence |
+| State | Angular Signals |
+| Forms | Reactive Forms with custom validators |
+
+---
+
+## Angular Concepts Used
+
+- **Signals** — reactive state management
+- **Services & DI** — `EventsService`, `AuthService` with `providedIn: 'root'`
+- **Reactive Forms** — login/signup with custom `passwordsMatch` validator
+- **Route Guards** — `authGuard` protecting `/map` and `/event/:id`
+- **@Input / @Output** — component communication (search term, date filter, event selection)
+- **ngOnChanges** — reacting to input changes for filtering
+- **AfterViewInit** — initializing Leaflet after DOM is ready
+- **ViewChild + ElementRef** — accessing the map DOM element
+- **ngOnDestroy** — cleaning up Leaflet instance to prevent memory leaks
+- **Custom Pipes** — `TruncatePipe` for marker labels
+- **Routing with params** — `/event/:id` with `ActivatedRoute`
+
+---
+
+## Project Structure
+
+```
+src/app/
+├── components/
+│   ├── navbar/          # Search bar, user info, logout
+│   └── sidebar/         # Event list, date filters, quick filters
+├── guards/
+│   └── auth.guard.ts    # Protects authenticated routes
+├── interfaces/
+│   └── event.ts         # AppEvent interface
+├── pages/
+│   ├── login/           # Reactive form with validation
+│   ├── signup/          # Reactive form with password match validator
+│   ├── map/             # Leaflet map + marker management
+│   └── event-detail/    # Event info + mini map
+├── pipes/
+│   └── truncate.pipe.ts # Truncates marker labels
+└── services/
+    ├── auth.service.ts  # Mock auth with localStorage
+    └── events.service.ts # Event data + search/filter logic
+```
+
+---
+
+## Getting Started
 
 ```bash
+# Clone the repo
+git clone https://github.com/andrew-miroiu/event-map.git
+cd event-map
+
+# Install dependencies
+npm install
+
+# Start dev server
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Open `http://localhost:4200`
 
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
+**Demo credentials:**
+```
+Email:    test@test.com
+Password: 123456
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+---
 
-```bash
-ng generate --help
-```
+## What I'd add next
 
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+- Replace mock data with a real REST API (Supabase or JSON Server)
+- Category filters (Music, Sport, Tech)
+- Animations on sidebar toggle
+- Unit tests for services and guards
