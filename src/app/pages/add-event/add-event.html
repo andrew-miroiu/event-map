@@ -1,0 +1,45 @@
+<div class="add-event-page">
+  <form [formGroup]="addEventForm" (ngSubmit)="onSubmit()">
+    
+    <span class="back-link" (click)="router.navigate(['/map'])">← Înapoi la hartă</span>
+    <h2>Eveniment nou</h2>
+
+    <label>Titlu</label>
+    <input formControlName="title" type="text" placeholder="Titlu" />
+
+    <label>Categorie</label>
+    <input formControlName="category" type="text" placeholder="music, tech, sport, art, food..." />
+
+    <label>Dată</label>
+    <input formControlName="date" type="date" />
+
+    <label>Oră</label>
+    <input formControlName="time" type="time" />
+
+    <label>Adresă</label>
+    <input formControlName="address" type="text" placeholder="Piața Unirii, Timișoara" />
+
+    <label>Descriere</label>
+    <textarea formControlName="description" placeholder="Descriere eveniment..."></textarea>
+
+    <label>Preț (RON)</label>
+    <input formControlName="price" type="number" placeholder="0" />
+
+    <label>Tags</label>
+    <input formControlName="tags" type="text" placeholder="jazz, outdoor, free" />
+
+    <div class="coords-row">
+        <div>
+            <label>Latitudine</label>
+            <input formControlName="lat" type="number" placeholder="45.7489" step="0.0001" />
+        </div>
+        <div>
+            <label>Longitudine</label>
+            <input formControlName="lng" type="number" placeholder="21.2087" step="0.0001" />
+        </div>
+    </div>
+
+    <button type="submit" [disabled]="addEventForm.invalid">Adaugă eveniment</button>
+
+  </form>
+</div>

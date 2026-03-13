@@ -191,4 +191,8 @@ export class EventsService {
   getEventById(id: string) : Event | undefined{
     return this.events.find(event => event.id === id);
   }
+
+  addEvent(newEvent: Event) : void{
+    this.events.push(newEvent);
+  }
 }

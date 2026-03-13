@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { Login } from './pages/login/login';
 import { Signup } from './pages/signup/signup';
 import { Map } from './pages/map/map';
+import { AddEvent } from './pages/add-event/add-event';
 import { EventDetail } from './pages/event-detail/event-detail';
 import { authGuard } from './guards/auth.guard';
 
@@ -22,6 +23,11 @@ export const routes: Routes = [
   {
     path: 'event/:id',
     component: EventDetail,
+    canActivate: [authGuard]
+  },
+  {
+    path: 'add-event',
+    component: AddEvent,
     canActivate: [authGuard]
   },
   {

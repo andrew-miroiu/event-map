@@ -16,7 +16,7 @@ import * as L from 'leaflet';
 })
 export class Map implements AfterViewInit, OnInit, OnDestroy {
 
-  private router = inject(Router);
+  router = inject(Router);
   private eventService = inject(EventsService);
   private events: Event[] = [];
 
